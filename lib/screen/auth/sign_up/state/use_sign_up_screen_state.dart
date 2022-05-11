@@ -1,7 +1,9 @@
+import 'package:ekorek/screen/auth/sign_in/sign_in_screen.dart';
 import 'package:ekorek/service/auth_service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
+import 'package:utopia_utils/utopia_utils_extensions.dart';
 
 class SignUpScreenState {
   final FieldState emailFieldState;
@@ -10,6 +12,7 @@ class SignUpScreenState {
   final bool isSubmitEnabled;
   final String? submitError;
   final void Function() onSignUp;
+  final void Function() onSignIn;
 
   SignUpScreenState({
     required this.emailFieldState,
@@ -18,6 +21,7 @@ class SignUpScreenState {
     required this.isSubmitEnabled,
     required this.submitError,
     required this.onSignUp,
+    required this.onSignIn,
   });
 }
 
@@ -26,6 +30,7 @@ SignUpScreenState useSignUpScreenState() {
   final emailFieldState = useFieldState();
   final passwordFieldState = useFieldState();
   final errorState = useState<String?>(null);
+  final context = useContext();
 
   final submitState = useSubmitState();
 
@@ -40,6 +45,10 @@ SignUpScreenState useSignUpScreenState() {
     );
   }
 
+  Future<void> navigateToSignIn() async {
+    await context.navigator.pushReplacementNamed(SignInScreen.route);
+  }
+
   return SignUpScreenState(
     emailFieldState: emailFieldState,
     passwordFieldState: passwordFieldState,
@@ -47,5 +56,6 @@ SignUpScreenState useSignUpScreenState() {
     submitState: submitState,
     isSubmitEnabled: passwordFieldState.value.isNotEmpty && emailFieldState.value.isNotEmpty,
     submitError: errorState.value,
+    onSignIn: navigateToSignIn,
   );
 }

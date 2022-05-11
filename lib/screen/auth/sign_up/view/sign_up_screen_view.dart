@@ -41,10 +41,26 @@ class SignUpScreenView extends StatelessWidget {
                   state.submitError!,
                   style: TextStyle(color: Colors.red),
                 ),
+              Divider(height: 16, thickness: 1),
+              _buildSignInSection(),
             ].separatedWith(SizedBox(height: 8)),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSignInSection() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text("Already have an account?"),
+        SizedBox(height: 8),
+        Button(
+          onTap: state.onSignIn,
+          text: "Sign In",
+        ),
+      ],
     );
   }
 }
