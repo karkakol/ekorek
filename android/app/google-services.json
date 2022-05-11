@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1087537355896",
+    "project_id": "ekorek-5ecd3",
+    "storage_bucket": "ekorek-5ecd3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1087537355896:android:8fe21bbb641f9c62d5a18d",
+        "android_client_info": {
+          "package_name": "com.ekorek.ekorek"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1087537355896-oetd1814gph3mnu9ijt6lf834cf65pnk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAjsI0SrSf153r76eelmltzBX0Vpz8GpA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1087537355896-oetd1814gph3mnu9ijt6lf834cf65pnk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
