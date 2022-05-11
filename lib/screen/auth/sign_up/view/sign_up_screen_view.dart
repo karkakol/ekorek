@@ -2,6 +2,7 @@ import 'package:ekorek/common/widgets/button/button.dart';
 import 'package:ekorek/common/widgets/text_input/text_input.dart';
 import 'package:ekorek/screen/auth/sign_up/state/use_sign_up_screen_state.dart';
 import 'package:flutter/material.dart';
+import 'package:utopia_utils/utopia_utils_extensions.dart';
 
 class SignUpScreenView extends StatelessWidget {
   final SignUpScreenState state;
@@ -10,14 +11,16 @@ class SignUpScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("SignUp"),
+      ),
+      body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("Sign up"),
+            children: <Widget>[
               TextInput(
                 fieldState: state.emailFieldState,
                 label: "Email",
@@ -26,6 +29,7 @@ class SignUpScreenView extends StatelessWidget {
                 fieldState: state.passwordFieldState,
                 label: "Password",
               ),
+              SizedBox(height: 8),
               Button(
                 onTap: state.onSignUp,
                 text: "Sign up",
@@ -37,7 +41,7 @@ class SignUpScreenView extends StatelessWidget {
                   state.submitError!,
                   style: TextStyle(color: Colors.red),
                 ),
-            ],
+            ].separatedWith(SizedBox(height: 8)),
           ),
         ),
       ),
