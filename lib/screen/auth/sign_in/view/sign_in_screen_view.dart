@@ -1,6 +1,7 @@
 import 'package:ekorek/common/widgets/button/button.dart';
 import 'package:ekorek/common/widgets/text_input/text_input.dart';
 import 'package:flutter/material.dart';
+import 'package:utopia_utils/utopia_utils_extensions.dart';
 import '../state/use_sign_in_screen_state.dart';
 
 class SignInScreenView extends StatelessWidget {
@@ -10,14 +11,16 @@ class SignInScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Center(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("SignIn"),
+      ),
+      body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Text("Sign in"),
+            children: <Widget>[
               TextInput(
                 fieldState: state.emailFieldState,
                 label: "Email",
@@ -26,8 +29,9 @@ class SignInScreenView extends StatelessWidget {
                 fieldState: state.passwordFieldState,
                 label: "Password",
               ),
+              SizedBox(height: 8),
               Button(
-                onTap: state.onSignUp,
+                onTap: state.onSignIn,
                 text: "Sign in",
                 isLoading: state.submitState.isSubmitInProgress,
                 enabled: state.isSubmitEnabled,
@@ -37,10 +41,26 @@ class SignInScreenView extends StatelessWidget {
                   state.submitError!,
                   style: TextStyle(color: Colors.red),
                 ),
-            ],
+              Divider(height: 16, thickness: 1),
+              _buildSignUpSection(),
+            ].separatedWith(SizedBox(height: 8)),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSignUpSection() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text("Don't have an account?"),
+        SizedBox(height: 8),
+        Button(
+          onTap: state.onSignUp,
+          text: "Create account",
+        ),
+      ],
     );
   }
 }
