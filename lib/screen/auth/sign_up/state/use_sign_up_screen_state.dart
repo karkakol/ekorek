@@ -1,4 +1,5 @@
 import 'package:ekorek/common/widgets/dropdown/use_dropdown_state.dart';
+import 'package:ekorek/model/user/user.dart' as model;
 import 'package:ekorek/model/user/user_type.dart';
 import 'package:ekorek/screen/auth/sign_in/sign_in_screen.dart';
 import 'package:ekorek/screen/home/home_screen.dart';
@@ -20,7 +21,6 @@ class SignUpScreenState {
   final void Function() onSignUp;
   final void Function() onSignIn;
 
-
   SignUpScreenState({
     required this.emailFieldState,
     required this.passwordFieldState,
@@ -32,7 +32,6 @@ class SignUpScreenState {
     required this.isSubmitEnabled,
     required this.submitError,
     required this.onSignUp,
-
   });
 }
 
@@ -57,11 +56,24 @@ SignUpScreenState useSignUpScreenState() {
     lastNameFieldState.value.isNotEmpty,
   ].contains(false);
 
+  buildUser() {
+    return model.User.setup(
+      email: emailFieldState.value,
+      firstName: firstNameFieldState.value,
+      lastName: lastNameFieldState.value,
+      type: userTypeState.value,
+    );
+  }
+
   Future<void> onSignUp() async {
     await submitState.runSimple<void, FirebaseAuthException>(
       beforeSubmit: () => errorState.value = null,
       shouldSubmit: () => true,
-      submit: () async => await authService.signUp(email: emailFieldState.value, password: passwordFieldState.value),
+      submit: () async => await authService.signUp(
+        email: emailFieldState.value,
+        password: passwordFieldState.value,
+        user: buildUser(),
+      ),
       mapError: (error) => error is FirebaseAuthException ? error : null,
       afterKnownError: (error) => errorState.value = error.message,
       afterSubmit: (_) => context.navigator.pushNamedAndRemoveUntil(HomeScreen.route, (_) => false),
