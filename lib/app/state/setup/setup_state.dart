@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class SetupState {
   final bool isInitialized;
@@ -14,17 +13,13 @@ class SetupStateProvider extends HookStateProviderWidget<SetupState> {
   SetupState use() {
     final isInitializedValue = useState<bool>(false);
 
-    Future<void> load() async {
-     await Firebase.initializeApp();
-    }
+    Future<void> load() async {}
 
     useSimpleEffect(() async {
-      await Future.wait([
-        load(),
-        Future.delayed(Duration(seconds: 1)), // workaround: ensure long enough wait to prevent startup lag
-      ]);
+      await load();
       isInitializedValue.value = true;
     }, []);
+
     return SetupState(isInitialized: isInitializedValue.value);
   }
 }
