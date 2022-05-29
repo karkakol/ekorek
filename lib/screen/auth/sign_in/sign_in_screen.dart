@@ -6,7 +6,7 @@ import 'state/use_sign_in_screen_state.dart';
 import 'view/sign_in_screen_view.dart';
 
 class SignInScreen extends HookWidget {
-  static const route = '/sign_in';
+  static const route = '/signIn';
   static final routeConfig = RouteConfig.material(() => const SignInScreen());
 
   const SignInScreen({Key? key}) : super(key: key);
