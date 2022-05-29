@@ -1,7 +1,9 @@
 import 'package:ekorek/common/widgets/button/button.dart';
+import 'package:ekorek/common/widgets/profile/profile.dart';
 import 'package:ekorek/screen/home/state/use_home_screen_state.dart';
 import 'package:ekorek/screen/home/widgets/navigation/navigation.dart';
 import 'package:flutter/material.dart';
+import 'package:utopia_utils/utopia_utils_extensions.dart';
 
 class HomeScreenView extends StatelessWidget {
   final HomeScreenState state;
@@ -40,19 +42,20 @@ class HomeScreenView extends StatelessWidget {
     return Center(child: Text("Search"));
   }
 
-  Widget _buildMeetings() {
-    return Center(child: Text("Meetings"));
-  }
-
   Widget _buildProfile() {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("Profile"),
-          Button(onTap: state.onSignOut, text: "Sign Out"),
-        ],
+      child: state.user == null ? CircularProgressIndicator() : Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Profile(user: state.user!),
+          Button(onTap: state.onSignOut, text: 'Sign Out'),
+          Button(onTap: state.onTutorTap, text: 'Navigate to some tutor'),
+        ].separatedWith(SizedBox(height: 8)),
       ),
     );
+  }
+
+  Widget _buildMeetings() {
+    return Center(child: Text("Meetings"));
   }
 }

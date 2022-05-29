@@ -1,4 +1,5 @@
 import 'package:ekorek/app/state/auth/auth_state.dart';
+import 'package:ekorek/app/state/auth/auth_status.dart';
 import 'package:ekorek/app/state/setup/use_async_after_setup.dart';
 import 'package:ekorek/screen/auth/welcome/welcome_screen.dart';
 import 'package:ekorek/screen/home/home_screen.dart';
@@ -22,7 +23,7 @@ SplashScreenState useSplashScreenState() {
   }
 
   useAsyncEffectAfterSetup(() async {
-    if (authState.user != null)
+    if (authState.status == AuthStatus.AUTHORIZED)
       navigateToHome();
     else
       navigateToWelcome();

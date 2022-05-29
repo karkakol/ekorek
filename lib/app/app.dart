@@ -1,6 +1,7 @@
 import 'package:ekorek/app/app_routing.dart';
 import 'package:ekorek/app/state/auth/auth_state.dart';
 import 'package:ekorek/app/state/setup/setup_state.dart';
+import 'package:ekorek/app/state/user/user_state.dart';
 import 'package:ekorek/config/config.dart';
 import 'package:ekorek/di/injector.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ class _AppState extends State<App> {
         InjectorProvider(setupInjector: setupInjector),
         SetupStateProvider(),
         AuthStateProvider(),
+        UserStateProvider(),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
