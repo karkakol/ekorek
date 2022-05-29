@@ -12,7 +12,7 @@ class HomeScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Ekorek Home"),
+          title: Text("Home"),
         ),
         body: Column(
           children: [

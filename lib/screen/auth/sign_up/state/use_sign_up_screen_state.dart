@@ -1,4 +1,5 @@
 import 'package:ekorek/screen/auth/sign_in/sign_in_screen.dart';
+import 'package:ekorek/screen/home/home_screen.dart';
 import 'package:ekorek/service/auth_service/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:utopia_arch/utopia_arch.dart';
@@ -41,7 +42,7 @@ SignUpScreenState useSignUpScreenState() {
       submit: () async => await authService.signUp(email: emailFieldState.value, password: passwordFieldState.value),
       mapError: (error) => error is FirebaseAuthException ? error : null,
       afterKnownError: (error) => errorState.value = error.message,
-      afterSubmit: (_) => errorState.value = "Signed Up :)!",
+      afterSubmit: (_) => context.navigator.pushNamedAndRemoveUntil(HomeScreen.route, (_) => false),
     );
   }
 
