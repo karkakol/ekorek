@@ -6,7 +6,7 @@ import 'state/use_sign_up_screen_state.dart';
 import 'view/sign_up_screen_view.dart';
 
 class SignUpScreen extends HookWidget {
-  static const route = '/sign_up';
+  static const route = '/signUp';
   static final routeConfig = RouteConfig.material(() => const SignUpScreen());
 
   const SignUpScreen({Key? key}) : super(key: key);
