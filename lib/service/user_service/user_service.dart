@@ -14,6 +14,10 @@ class UserService {
 
   Future<model.User?> getCurrentUser() async {
     final uid = _auth.currentUser?.uid;
+    return uid != null  ? await getUser(uid) : null;
+  }
+
+  Future<model.User?> getUser(String uid) async {
     final result = (await _firestore.collection('users').doc(uid).get()).data();
     if (result != null) return model.User.fromJson(result);
     return null;

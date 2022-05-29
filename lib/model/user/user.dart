@@ -41,3 +41,7 @@ class User with _$User {
   }
 }
 
+extension UserExtension on User {
+  String get fullName => firstName + " " + lastName;
+}
+
