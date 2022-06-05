@@ -4,7 +4,6 @@ import 'package:ekorek/model/user/user_type.dart';
 import 'package:ekorek/screen/auth/sign_in/sign_in_screen.dart';
 import 'package:ekorek/screen/home/home_screen.dart';
 import 'package:ekorek/service/auth_service/auth_service.dart';
-import 'package:ekorek/service/users_service/users_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
@@ -17,6 +16,11 @@ class SignUpScreenState {
   final FieldState passwordFieldState;
   final FieldState firstNameFieldState;
   final FieldState lastNameFieldState;
+  final FieldState cityFieldState;
+  final FieldState postalCodeFieldState;
+  final FieldState streetFieldState;
+  final FieldState numberFieldState;
+
   final DropdownState<UserType> userTypeState;
   final SubmitState submitState;
   final bool isSubmitEnabled;
@@ -35,6 +39,10 @@ class SignUpScreenState {
     required this.isSubmitEnabled,
     required this.submitError,
     required this.onSignUp,
+    required this.cityFieldState,
+    required this.postalCodeFieldState,
+    required this.streetFieldState,
+    required this.numberFieldState,
   });
 }
 
@@ -46,6 +54,10 @@ SignUpScreenState useSignUpScreenState() {
   final passwordFieldState = useFieldState();
   final firstNameFieldState = useFieldState();
   final lastNameFieldState = useFieldState();
+  final cityFieldState = useFieldState();
+  final postalCodeFieldState = useFieldState();
+  final streetFieldState = useFieldState();
+  final numberFieldState = useFieldState();
   final userTypeState = useDropdownState<UserType>(initialValue: UserType.STUDENT, items: UserType.values);
 
   final errorState = useState<String?>(null);
@@ -60,12 +72,28 @@ SignUpScreenState useSignUpScreenState() {
     lastNameFieldState.value.isNotEmpty,
   ].contains(false);
 
-  buildUser() {
-    return model.User.setup(
+  buildStudent() {
+    return model.UserStudent(
       email: emailFieldState.value,
       firstName: firstNameFieldState.value,
       lastName: lastNameFieldState.value,
-      type: userTypeState.value,
+      city: cityFieldState.value,
+      postalCode: postalCodeFieldState.value,
+      street: streetFieldState.value,
+      number: numberFieldState.value,
+    );
+  }
+
+  buildTutor() {
+    return model.UserTutor(
+      email: emailFieldState.value,
+      firstName: firstNameFieldState.value,
+      lastName: lastNameFieldState.value,
+      city: cityFieldState.value,
+      postalCode: postalCodeFieldState.value,
+      street: streetFieldState.value,
+      number: numberFieldState.value,
+      subjects: [],
     );
   }
 
@@ -75,12 +103,12 @@ SignUpScreenState useSignUpScreenState() {
       shouldSubmit: () => true,
       submit: () async {
         await authService.signUp(
-          email: emailFieldState.value,
-          password: passwordFieldState.value,
-          user: buildUser(),
-        );
+        email: emailFieldState.value,
+        password: passwordFieldState.value,
+        user: userTypeState.value == UserType.TUTOR ? buildTutor() : buildStudent()
+      );
         await usersState.getTutors();
-      },
+        },
       mapError: (error) => error is FirebaseAuthException ? error : null,
       afterKnownError: (error) => errorState.value = error.message,
       afterSubmit: (_) => context.navigator.pushNamedAndRemoveUntil(HomeScreen.route, (_) => false),
