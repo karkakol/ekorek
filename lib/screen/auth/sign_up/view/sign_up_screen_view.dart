@@ -74,10 +74,11 @@ class SignUpScreenView extends StatelessWidget {
             label: "Account Type",
             itemBuilder: (value) => Text(value.name),
           ),
-          SubjectsInput(
-            subjects: state.subjects,
-            onChanged: state.onSubjectsChanged,
-          ),
+          if (state.userTypeState.value == UserType.TUTOR)
+            SubjectsInput(
+              subjects: state.subjects,
+              onChanged: state.onSubjectsChanged,
+            ),
         ].separatedWith(SizedBox(height: 8)),
       ),
     );
