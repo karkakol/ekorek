@@ -1,9 +1,10 @@
-import 'package:ekorek/service/search_tutor_service/search_tutor_service.dart';
+import 'package:ekorek/model/user/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
+import '../../../../app/state/users/users_state.dart';
 import '../../../../common/widgets/text_input/text_input.dart';
 
 class SearchTab extends HookWidget {
@@ -11,13 +12,10 @@ class SearchTab extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchTutorService = useInjected<SearchTutorService>();
+    final usersState = useProvided<UsersState>();
 
     final searchFieldState = useFieldState();
 
-    useEffect((){
-      searchTutorService.searchTutors(searchFieldState.value);
-    },[searchFieldState.value]);
 
     return Column(
       children: [
@@ -27,7 +25,9 @@ class SearchTab extends HookWidget {
             fieldState: searchFieldState,
             prefix: Icon(Icons.search),
           ),
-        )
+        ),
+        for(final tutor in usersState.tutors)
+          Text(tutor.fullName + " " + tutor.email)
       ],
     );
   }
