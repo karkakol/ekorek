@@ -77,6 +77,11 @@ SignUpScreenState useSignUpScreenState() {
     emailFieldState.value.isNotEmpty,
     firstNameFieldState.value.isNotEmpty,
     lastNameFieldState.value.isNotEmpty,
+    cityFieldState.value.isNotEmpty,
+    postalCodeFieldState.value.isNotEmpty,
+    streetFieldState.value.isNotEmpty,
+    numberFieldState.value.isNotEmpty,
+    (userTypeState.value == UserType.STUDENT || subjectsState.value.isNotEmpty),
   ].contains(false);
 
   buildStudent() {
@@ -110,12 +115,12 @@ SignUpScreenState useSignUpScreenState() {
       shouldSubmit: () => true,
       submit: () async {
         await authService.signUp(
-        email: emailFieldState.value,
-        password: passwordFieldState.value,
-        user: userTypeState.value == UserType.TUTOR ? buildTutor() : buildStudent()
-      );
+          email: emailFieldState.value,
+          password: passwordFieldState.value,
+          user: userTypeState.value == UserType.TUTOR ? buildTutor() : buildStudent(),
+        );
         await usersState.getTutors();
-        },
+      },
       mapError: (error) => error is FirebaseAuthException ? error : null,
       afterKnownError: (error) => errorState.value = error.message,
       afterSubmit: (_) => context.navigator.pushNamedAndRemoveUntil(HomeScreen.route, (_) => false),
