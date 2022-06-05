@@ -76,7 +76,10 @@ class SearchTab extends HookWidget {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              return TutorTile(tutor: displayedTutorsState.value[index]);
+              return TutorTile(
+                tutor: displayedTutorsState.value[index],
+                subject: currentSubject.value,
+              );
             },
             childCount: displayedTutorsState.value.length,
           ),
