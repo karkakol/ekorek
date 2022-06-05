@@ -12,7 +12,7 @@ class UsersService {
 
   Future<IList<model.User>> getTutorsUsers() async {
     final usersQuery = _firestore.collection(CollectionNames.users);
-    final tutorsResponse = (await usersQuery.where('runtimeType', isEqualTo:  UserType.TUTOR.display).get())
+    final tutorsResponse = (await usersQuery.where('type', isEqualTo:  UserType.TUTOR.display).get())
         .docs
         .map((e) => model.User.fromJson(e.data()));
 
