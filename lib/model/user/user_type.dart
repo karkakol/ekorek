@@ -1,8 +1,10 @@
 enum UserType {
-  TUTOR,
-  STUDENT,
-}
+  TUTOR(name: "TUTOR"),
+  STUDENT(name: "TUTOR");
 
-extension UserTypeExtension on UserType {
-  String get display => toString().split('.').last;
+  final String name;
+  const UserType({required this.name});
+
+  String get display => this.name;
+
 }
