@@ -5,10 +5,11 @@ part 'user.freezed.dart';
 
 part 'user.g.dart';
 
-@freezed
+@Freezed(unionKey: 'type')
 class User with _$User {
   const User._();
 
+  @FreezedUnionValue('STUDENT')
   factory User.student({
     // common
     @Default(UserType.STUDENT) UserType type,
@@ -23,6 +24,7 @@ class User with _$User {
     // ...
   }) = UserStudent;
 
+  @FreezedUnionValue('TUTOR')
   factory User.tutor({
     // common
     @Default(UserType.TUTOR) UserType type,
