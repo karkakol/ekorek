@@ -5,18 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
 class SubjectsInput extends HookWidget {
-  final IList<Subject> initialValue;
-  final void Function(Subject) onChanged;
+  final IList<Subject> subjects;
+  final void Function(IList<Subject>) onChanged;
 
   const SubjectsInput({
     Key? key,
-    required this.initialValue,
+    required this.subjects,
     required this.onChanged,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final subjectsState = useState<IList<Subject>>(initialValue);
     return Column(
       children: [
         Row(
@@ -24,8 +23,8 @@ class SubjectsInput extends HookWidget {
             Text("Subjects"),
             IconButton(
               onPressed: () async {
-                final result = await SubjectsPicker.pick(context: context, initialValue: subjectsState.value);
-                if (result != null) subjectsState.value = result;
+                final result = await SubjectsPicker.pick(context: context, initialValue: subjects);
+                if (result != null) onChanged(result);
               },
               icon: Icon(Icons.add_circle_outline_rounded),
             ),
@@ -33,13 +32,13 @@ class SubjectsInput extends HookWidget {
         ),
         ListView.builder(
           shrinkWrap: true,
-          itemCount: subjectsState.value.length,
+          itemCount: subjects.length,
           itemBuilder: (context, index) {
             return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(subjectsState.value[index].name.toUpperCase()),
-                Text(subjectsState.value[index].pricePerHour.toString()),
+                Text(subjects[index].name.toUpperCase()),
+                Text(subjects[index].pricePerHour.toString()),
               ],
             );
           },

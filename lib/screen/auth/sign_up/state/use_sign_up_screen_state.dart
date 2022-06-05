@@ -1,9 +1,11 @@
 import 'package:ekorek/common/widgets/dropdown/use_dropdown_state.dart';
+import 'package:ekorek/model/subject/subject.dart';
 import 'package:ekorek/model/user/user.dart' as model;
 import 'package:ekorek/model/user/user_type.dart';
 import 'package:ekorek/screen/auth/sign_in/sign_in_screen.dart';
 import 'package:ekorek/screen/home/home_screen.dart';
 import 'package:ekorek/service/auth_service/auth_service.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
@@ -25,6 +27,8 @@ class SignUpScreenState {
   final String? submitError;
   final void Function() onSignUp;
   final void Function() onSignIn;
+  final void Function(IList<Subject>) onSubjectsChanged;
+  final IList<Subject> subjects;
 
   SignUpScreenState({
     required this.emailFieldState,
@@ -41,6 +45,8 @@ class SignUpScreenState {
     required this.postalCodeFieldState,
     required this.streetFieldState,
     required this.numberFieldState,
+    required this.onSubjectsChanged,
+    required this.subjects,
   });
 }
 
@@ -56,6 +62,7 @@ SignUpScreenState useSignUpScreenState() {
   final streetFieldState = useFieldState();
   final numberFieldState = useFieldState();
   final userTypeState = useDropdownState<UserType>(initialValue: UserType.STUDENT, items: UserType.values);
+  final subjectsState = useState<IList<Subject>>(IList());
 
   final errorState = useState<String?>(null);
   final context = useContext();
@@ -90,7 +97,7 @@ SignUpScreenState useSignUpScreenState() {
       postalCode: postalCodeFieldState.value,
       street: streetFieldState.value,
       number: numberFieldState.value,
-      subjects: [],
+      subjects: subjectsState.value.toList(),
     );
   }
 
@@ -128,5 +135,7 @@ SignUpScreenState useSignUpScreenState() {
     isSubmitEnabled: isSubmitEnabled,
     submitError: errorState.value,
     onSignIn: navigateToSignIn,
+    onSubjectsChanged: (subjects) => subjectsState.value = subjects,
+    subjects: subjectsState.value,
   );
 }
