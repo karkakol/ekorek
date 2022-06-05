@@ -14,6 +14,11 @@ class SignUpScreenState {
   final FieldState passwordFieldState;
   final FieldState firstNameFieldState;
   final FieldState lastNameFieldState;
+  final FieldState cityFieldState;
+  final FieldState postalCodeFieldState;
+  final FieldState streetFieldState;
+  final FieldState numberFieldState;
+
   final DropdownState<UserType> userTypeState;
   final SubmitState submitState;
   final bool isSubmitEnabled;
@@ -32,6 +37,10 @@ class SignUpScreenState {
     required this.isSubmitEnabled,
     required this.submitError,
     required this.onSignUp,
+    required this.cityFieldState,
+    required this.postalCodeFieldState,
+    required this.streetFieldState,
+    required this.numberFieldState,
   });
 }
 
@@ -42,6 +51,10 @@ SignUpScreenState useSignUpScreenState() {
   final passwordFieldState = useFieldState();
   final firstNameFieldState = useFieldState();
   final lastNameFieldState = useFieldState();
+  final cityFieldState = useFieldState();
+  final postalCodeFieldState = useFieldState();
+  final streetFieldState = useFieldState();
+  final numberFieldState = useFieldState();
   final userTypeState = useDropdownState<UserType>(initialValue: UserType.STUDENT, items: UserType.values);
 
   final errorState = useState<String?>(null);
@@ -56,12 +69,28 @@ SignUpScreenState useSignUpScreenState() {
     lastNameFieldState.value.isNotEmpty,
   ].contains(false);
 
-  buildUser() {
-    return model.User.setup(
+  buildStudent() {
+    return model.UserStudent(
       email: emailFieldState.value,
       firstName: firstNameFieldState.value,
       lastName: lastNameFieldState.value,
-      type: userTypeState.value,
+      city: cityFieldState.value,
+      postalCode: postalCodeFieldState.value,
+      street: streetFieldState.value,
+      number: numberFieldState.value,
+    );
+  }
+
+  buildTutor() {
+    return model.UserTutor(
+      email: emailFieldState.value,
+      firstName: firstNameFieldState.value,
+      lastName: lastNameFieldState.value,
+      city: cityFieldState.value,
+      postalCode: postalCodeFieldState.value,
+      street: streetFieldState.value,
+      number: numberFieldState.value,
+      subjects: [],
     );
   }
 
@@ -72,7 +101,7 @@ SignUpScreenState useSignUpScreenState() {
       submit: () async => await authService.signUp(
         email: emailFieldState.value,
         password: passwordFieldState.value,
-        user: buildUser(),
+        user: userTypeState.value == UserType.TUTOR ? buildTutor() : buildStudent(),
       ),
       mapError: (error) => error is FirebaseAuthException ? error : null,
       afterKnownError: (error) => errorState.value = error.message,
@@ -89,6 +118,10 @@ SignUpScreenState useSignUpScreenState() {
     passwordFieldState: passwordFieldState,
     firstNameFieldState: firstNameFieldState,
     lastNameFieldState: lastNameFieldState,
+    cityFieldState: cityFieldState,
+    postalCodeFieldState: postalCodeFieldState,
+    numberFieldState: numberFieldState,
+    streetFieldState: streetFieldState,
     userTypeState: userTypeState,
     onSignUp: onSignUp,
     submitState: submitState,

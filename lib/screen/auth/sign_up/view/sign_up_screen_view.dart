@@ -51,6 +51,22 @@ class SignUpScreenView extends StatelessWidget {
             fieldState: state.lastNameFieldState,
             label: "Last Name",
           ),
+          TextInput(
+            fieldState: state.cityFieldState,
+            label: "City",
+          ),
+          TextInput(
+            fieldState: state.postalCodeFieldState,
+            label: "Postal Code",
+          ),
+          TextInput(
+            fieldState: state.streetFieldState,
+            label: "Street",
+          ),
+          TextInput(
+            fieldState: state.numberFieldState,
+            label: "House Number",
+          ),
           Dropdown<UserType>(
             state: state.userTypeState,
             label: "Account Type",
