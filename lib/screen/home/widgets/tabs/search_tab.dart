@@ -1,4 +1,7 @@
-import 'package:ekorek/model/user/user.dart';
+import 'package:ekorek/model/user/user.dart' as model;
+import 'package:ekorek/screen/home/widgets/tabs/widget/subject_tile.dart';
+import 'package:ekorek/screen/home/widgets/tabs/widget/tutor_tile.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_arch/utopia_arch.dart';
@@ -6,6 +9,8 @@ import 'package:utopia_hooks/utopia_hooks.dart';
 
 import '../../../../app/state/users/users_state.dart';
 import '../../../../common/widgets/text_input/text_input.dart';
+import '../../../../config/config.dart';
+import '../../../../model/user/user.dart';
 
 class SearchTab extends HookWidget {
   const SearchTab({Key? key}) : super(key: key);
@@ -14,20 +19,57 @@ class SearchTab extends HookWidget {
   Widget build(BuildContext context) {
     final usersState = useProvided<UsersState>();
 
+    final remotesSubjects = useRef<List<String>>(Config.remote.subjects);
+
+    final displayedTutorsState = useState<IList<model.User>>(usersState.tutors);
+
     final searchFieldState = useFieldState();
+    final currentSubject = useState<String>(Config.remote.subjects.first);
 
+    // final filterTutors = useCallback<IList<model.User> Function(IList<model.User> allTutors, String currentSubject,
+    //     String phrase, )>((allUsers, subject, phrase) {
+    //   return allUsers.where((tutor) => (tutor as UserTutor).subjects. &&).toIList();
+    // }, []);
 
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.fromLTRB(24, 12, 24, 12),
-          child: TextInput(
-            fieldState: searchFieldState,
-            prefix: Icon(Icons.search),
+    useEffect(() {
+
+    }, [
+      currentSubject.value,
+      searchFieldState.value,
+    ]);
+
+    useEffect(() {
+      displayedTutorsState.value = usersState.tutors;
+    }, [usersState.tutors]);
+
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
+            child: TextInput(
+              fieldState: searchFieldState,
+              prefix: const Icon(Icons.search),
+            ),
           ),
         ),
-        for(final tutor in usersState.tutors)
-          Text(tutor.fullName + " " + tutor.email)
+        SliverToBoxAdapter(
+          child: Wrap(
+            children: [
+              for (final subject in remotesSubjects.value)
+                SubjectTile(
+                  onTap: () => currentSubject.value = subject,
+                  subjectName: subject,
+                  isSelected: subject == currentSubject.value,
+                )
+            ],
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate((context, index) {
+            return TutorTile(tutor: displayedTutorsState.value[index]);
+          }, childCount: displayedTutorsState.value.length),
+        )
       ],
     );
   }

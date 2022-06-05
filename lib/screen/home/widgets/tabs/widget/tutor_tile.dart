@@ -11,6 +11,7 @@ class TutorTile extends StatelessWidget {
     return Card(
       child: ListTile(
         title: Text(tutor.fullName),
+        subtitle: Text(tutor.city),
       ),
     );
   }

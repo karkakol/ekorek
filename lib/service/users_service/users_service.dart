@@ -8,9 +8,11 @@ import 'package:utopia_utils/utopia_utils_extensions.dart';
 class UsersService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  
+
   Future<IList<model.User>> getTutorsUsers() async {
     final usersQuery = _firestore.collection(CollectionNames.users);
-    final tutorsResponse = (await usersQuery.where('runtimeType', isEqualTo: "tutor").get())
+    final tutorsResponse = (await usersQuery.where('runtimeType', isEqualTo:  UserType.TUTOR.display).get())
         .docs
         .map((e) => model.User.fromJson(e.data()));
 
