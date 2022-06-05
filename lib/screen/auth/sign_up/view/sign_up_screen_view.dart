@@ -72,7 +72,7 @@ class SignUpScreenView extends StatelessWidget {
           Dropdown<UserType>(
             state: state.userTypeState,
             label: "Account Type",
-            itemBuilder: (value) => Text(value.display),
+            itemBuilder: (value) => Text(value.name),
           ),
           SubjectsInput(
             subjects: state.subjects,

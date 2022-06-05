@@ -37,7 +37,7 @@ class User with _$User {
     required String street,
     required String number,
     // depends on type
-    required List<Subject> subjects,
+    required Map<String, int> subjects,
   }) = UserTutor;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
