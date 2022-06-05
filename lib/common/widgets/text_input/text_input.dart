@@ -5,11 +5,13 @@ import 'package:utopia_hooks/utopia_hooks.dart';
 class TextInput extends StatelessWidget {
   final FieldState fieldState;
   final String? label;
+  final Widget? prefix;
 
   const TextInput({
     Key? key,
     required this.fieldState,
     this.label,
+    this.prefix,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class TextInput extends StatelessWidget {
   Widget _buildTextFromField(TextEditingController controller) {
     return TextFormField(
       onChanged: fieldState.onChanged,
-      decoration: InputDecoration(labelText: label),
+      decoration: InputDecoration(labelText: label, prefix:prefix ),
     );
   }
 }

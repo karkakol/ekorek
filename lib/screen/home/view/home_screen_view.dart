@@ -5,6 +5,8 @@ import 'package:ekorek/screen/home/widgets/navigation/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_utils/utopia_utils_extensions.dart';
 
+import '../widgets/tabs/search_tab.dart';
+
 class HomeScreenView extends StatelessWidget {
   final HomeScreenState state;
 
@@ -31,7 +33,7 @@ class HomeScreenView extends StatelessWidget {
     return TabBarView(
       controller: state.tabController,
       children: [
-        _buildSearch(),
+         SearchTab(),
         _buildMeetings(),
         _buildProfile(),
       ],
