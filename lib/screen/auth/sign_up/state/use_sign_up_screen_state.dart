@@ -130,5 +130,9 @@ SignUpScreenState useSignUpScreenState() {
     isSubmitEnabled: isSubmitEnabled,
     submitError: errorState.value,
     onSignIn: navigateToSignIn,
+    postalCodeFieldState: postalCodeFieldState,
+    numberFieldState: numberFieldState,
+    streetFieldState: streetFieldState,
+    cityFieldState: cityFieldState,
   );
 }

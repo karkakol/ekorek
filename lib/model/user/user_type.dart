@@ -1,6 +1,6 @@
 enum UserType {
   TUTOR(name: "TUTOR"),
-  STUDENT(name: "TUTOR");
+  STUDENT(name: "STUDENT");
 
   final String name;
   const UserType({required this.name});
