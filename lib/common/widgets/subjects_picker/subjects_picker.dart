@@ -66,7 +66,10 @@ class SubjectsPicker extends HookWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Button(onTap: () => context.navigator.pop(state.value), text: 'Save'),
+            child: Button(
+              onTap: () => context.navigator.pop(state.value.removeWhere((e) => e.pricePerHour == 0)),
+              text: 'Save',
+            ),
           ),
         ],
       ),
