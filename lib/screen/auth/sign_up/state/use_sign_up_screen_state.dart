@@ -100,7 +100,7 @@ SignUpScreenState useSignUpScreenState() {
       postalCode: postalCodeFieldState.value,
       street: streetFieldState.value,
       number: numberFieldState.value,
-      subjects: subjectsState.value.toList(),
+      subjects: Map.fromEntries(subjectsState.value.map((e) => MapEntry(e.name, e.pricePerHour))),
     );
   }
 

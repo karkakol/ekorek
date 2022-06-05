@@ -15,7 +15,7 @@ class Profile extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text("Type: ${user.type.display}"),
+        Text("Type: ${user.type.name}"),
         Text("Email: ${user.email}"),
         Text("First Name: ${user.firstName}"),
         Text("Last Name: ${user.lastName}"),

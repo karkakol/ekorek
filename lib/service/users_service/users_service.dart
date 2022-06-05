@@ -12,7 +12,7 @@ class UsersService {
 
   Future<IList<model.User>> getTutorsUsers() async {
     final usersQuery = _firestore.collection(CollectionNames.users);
-    final tutorsResponse = (await usersQuery.where('runtimeType', isEqualTo:  UserType.TUTOR.display).get())
+    final tutorsResponse = (await usersQuery.where('runtimeType', isEqualTo:  UserType.TUTOR.name).get())
         .docs
         .map((e) => model.User.fromJson(e.data()));
 
@@ -21,7 +21,7 @@ class UsersService {
 
   Stream<IList<model.User>> tutorsStream() {
     return _firestore.collection(CollectionNames.users).snapshots().map((event) => event.docs
-        .where((e) => e.data()['type'] == UserType.TUTOR.display)
+        .where((e) => e.data()['type'] == UserType.TUTOR.name)
         .map((e) => model.User.fromJson(e.data()))
         .toIList());
   }
