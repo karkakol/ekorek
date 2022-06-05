@@ -26,21 +26,29 @@ class SearchTab extends HookWidget {
     final searchFieldState = useFieldState();
     final currentSubject = useState<String>(Config.remote.subjects.first);
 
-    // final filterTutors = useCallback<IList<model.User> Function(IList<model.User> allTutors, String currentSubject,
-    //     String phrase, )>((allUsers, subject, phrase) {
-    //   return allUsers.where((tutor) => (tutor as UserTutor).subjects. &&).toIList();
-    // }, []);
+    final filterTutors = useCallback<
+        IList<model.User> Function(
+      IList<model.User> allTutors,
+      String currentSubject,
+      String phrase,
+    )>((allUsers, subject, phrase) {
+      phrase = phrase.toLowerCase();
+      return allUsers
+          .where((tutor) =>
+              (tutor as UserTutor).subjects[subject] != null &&
+              (tutor.city.toLowerCase().contains(phrase) ||
+                  tutor.firstName.toLowerCase().contains(phrase) ||
+                  tutor.lastName.toLowerCase().contains(phrase)))
+          .toIList();
+    }, []);
 
     useEffect(() {
-
+      displayedTutorsState.value = filterTutors(usersState.tutors, currentSubject.value, searchFieldState.value);
     }, [
       currentSubject.value,
       searchFieldState.value,
+      usersState.tutors,
     ]);
-
-    useEffect(() {
-      displayedTutorsState.value = usersState.tutors;
-    }, [usersState.tutors]);
 
     return CustomScrollView(
       slivers: [
@@ -66,9 +74,12 @@ class SearchTab extends HookWidget {
           ),
         ),
         SliverList(
-          delegate: SliverChildBuilderDelegate((context, index) {
-            return TutorTile(tutor: displayedTutorsState.value[index]);
-          }, childCount: displayedTutorsState.value.length),
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return TutorTile(tutor: displayedTutorsState.value[index]);
+            },
+            childCount: displayedTutorsState.value.length,
+          ),
         )
       ],
     );
