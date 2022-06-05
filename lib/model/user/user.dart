@@ -1,3 +1,4 @@
+import 'package:ekorek/model/subject/subject.dart';
 import 'package:ekorek/model/user/user_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -36,7 +37,7 @@ class User with _$User {
     required String street,
     required String number,
     // depends on type
-    required List<String> subjects,
+    required List<Subject> subjects,
   }) = UserTutor;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
