@@ -1,6 +1,8 @@
 import 'package:ekorek/common/widgets/button/button.dart';
 import 'package:ekorek/common/widgets/dropdown/dropdown.dart';
+import 'package:ekorek/common/widgets/subjects_picker/subjects_input.dart';
 import 'package:ekorek/common/widgets/text_input/text_input.dart';
+import 'package:ekorek/model/subject/subject.dart';
 import 'package:ekorek/model/user/user_type.dart';
 import 'package:ekorek/screen/auth/sign_up/state/use_sign_up_screen_state.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +73,10 @@ class SignUpScreenView extends StatelessWidget {
             state: state.userTypeState,
             label: "Account Type",
             itemBuilder: (value) => Text(value.display),
+          ),
+          SubjectsInput(
+            subjects: state.subjects,
+            onChanged: state.onSubjectsChanged,
           ),
         ].separatedWith(SizedBox(height: 8)),
       ),
