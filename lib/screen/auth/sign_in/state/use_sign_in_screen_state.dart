@@ -1,9 +1,13 @@
 import 'package:ekorek/screen/auth/sign_up/sign_up_screen.dart';
+import 'package:ekorek/screen/home/home_screen.dart';
 import 'package:ekorek/service/auth_service/auth_service.dart';
+import 'package:ekorek/service/users_service/users_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 import 'package:utopia_utils/utopia_utils.dart';
+
+import '../../../../app/state/users/users_state.dart';
 
 class SignInScreenState {
   final FieldState emailFieldState;
@@ -28,6 +32,8 @@ class SignInScreenState {
 
 SignInScreenState useSignInScreenState() {
   final authService = useInjected<AuthService>();
+  final usersState = useProvided<UsersState>();
+
   final emailFieldState = useFieldState();
   final passwordFieldState = useFieldState();
   final errorState = useState<String?>(null);
@@ -39,10 +45,13 @@ SignInScreenState useSignInScreenState() {
     await submitState.runSimple<void, FirebaseAuthException>(
       beforeSubmit: () => errorState.value = null,
       shouldSubmit: () => true,
-      submit: () async => await authService.signIn(email: emailFieldState.value, password: passwordFieldState.value),
+      submit: () async {
+        await authService.signIn(email: emailFieldState.value, password: passwordFieldState.value);
+        await usersState.getTutors();
+      },
       mapError: (error) => error is FirebaseAuthException ? error : null,
       afterKnownError: (error) => errorState.value = error.message,
-      afterSubmit: (_) => errorState.value = "Signed In",
+      afterSubmit: (_) => context.navigator.pushNamedAndRemoveUntil(HomeScreen.route, (_) => false),
     );
   }
 

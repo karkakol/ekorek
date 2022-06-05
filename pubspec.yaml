@@ -5,7 +5,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.16.1 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
+
 
 dependencies:
   flutter:
@@ -15,8 +16,11 @@ dependencies:
 
   provider: ^6.0.2
 
+  fast_immutable_collections: ^7.4.1
+
   #firebase
   firebase_auth: ^3.3.17
+  cloud_firestore: ^3.1.17
 
   #utopia
   utopia_hooks: ^0.3.1+1
@@ -25,12 +29,18 @@ dependencies:
   utopia_lints: ^0.0.1+1
   utopia_widgets: ^0.0.10
   utopia_arch: ^0.4.0+1
+  freezed_annotation: ^2.0.3
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.11
+  freezed: ^2.0.3+1
+  json_serializable: ^6.2.0
 
 flutter:
   uses-material-design: true
