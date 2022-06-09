@@ -15,9 +15,7 @@ class ProfileScreenView extends StatelessWidget {
       appBar: AppBar(
         title: Text("Profile ${state.user.fullName}"),
       ),
-      body: Center(
-        child: Profile(user: state.user),
-      )
+      body: Profile(user: state.user),
     );
   }
 }

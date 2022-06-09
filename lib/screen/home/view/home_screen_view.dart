@@ -45,16 +45,15 @@ class HomeScreenView extends StatelessWidget {
   }
 
   Widget _buildProfile() {
-    return Center(
-      child: state.user == null ? CircularProgressIndicator() : Column(
+    return
+      state.user == null ? Center(child: CircularProgressIndicator()): Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Profile(user: state.user!),
           Button(onTap: state.onSignOut, text: 'Sign Out'),
           Button(onTap: state.onTutorTap, text: 'Navigate to some tutor'),
         ].separatedWith(SizedBox(height: 8)),
-      ),
-    );
+      );
   }
 
   Widget _buildMeetings() {

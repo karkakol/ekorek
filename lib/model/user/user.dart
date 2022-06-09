@@ -45,5 +45,9 @@ class User with _$User {
 
 extension UserExtension on User {
   String get fullName => firstName + " " + lastName;
+  String get queryAddress => street + " " + number + ", " + city + " " + postalCode;
 }
 
+extension UserTutorExtension on UserTutor {
+  List<Subject> get subjectsList => subjects.entries.map((e) => Subject(name: e.key, pricePerHour: e.value)).toList();
+}
