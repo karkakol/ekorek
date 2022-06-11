@@ -1,3 +1,4 @@
+import 'package:ekorek/config/app_colors.dart';
 import 'package:ekorek/model/user/user.dart' as model;
 import 'package:ekorek/screen/create_appointment/state/create_appointemtn_screen_args.dart';
 import 'package:ekorek/screen/home/widgets/tabs/widget/subject_tile.dart';
@@ -57,42 +58,60 @@ class SearchTab extends HookWidget {
       usersState.tutors,
     ]);
 
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
-            child: TextInput(
-              fieldState: searchFieldState,
-              prefix: const Icon(Icons.search),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
+              child: TextInput(
+                fieldState: searchFieldState,
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.white, width: 1),
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: AppColors.primaryColor, width: 1),
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                prefix:  Icon(
+                  Icons.search,
+                  color: AppColors.primaryColor,
+                ),
+              ),
             ),
           ),
-        ),
-        SliverToBoxAdapter(
-          child: Wrap(
-            children: [
-              for (final subject in remotesSubjects.value)
-                SubjectTile(
-                  onTap: () => currentSubject.value = subject,
-                  subjectName: subject,
-                  isSelected: subject == currentSubject.value,
-                )
-            ],
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+              child: Wrap(
+                children: [
+                  for (final subject in remotesSubjects.value)
+                    SubjectTile(
+                      onTap: () => currentSubject.value = subject,
+                      subjectName: subject,
+                      isSelected: subject == currentSubject.value,
+                    )
+                ],
+              ),
+            ),
           ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return TutorTile(
-                tutor: displayedTutorsState.value[index],
-                subject: currentSubject.value,
-                onTap: navigateToCreateAppointment,
-              );
-            },
-            childCount: displayedTutorsState.value.length,
-          ),
-        )
-      ],
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return TutorTile(
+                  tutor: displayedTutorsState.value[index],
+                  subject: currentSubject.value,
+                  onTap: navigateToCreateAppointment,
+                );
+              },
+              childCount: displayedTutorsState.value.length,
+            ),
+          )
+        ],
+      ),
     );
   }
 }
