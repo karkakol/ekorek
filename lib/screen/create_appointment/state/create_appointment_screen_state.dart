@@ -1,4 +1,6 @@
+import 'package:ekorek/di/injector.dart';
 import 'package:ekorek/model/user/user.dart';
+import 'package:ekorek/service/appointment_service/appointments_service.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 
@@ -47,6 +49,8 @@ class CreateAppointmentScreenState {
 const _durationStep = 15;
 
 CreateAppointmentScreenState useCreateAppointmentScreenState({required CreateAppointmentScreenArgs args}) {
+  final appointmentService = useInjected<AppointmentsService>();
+
   final pickedDayState = useFullState<DateTime?>(null);
   final startTimeState = useFullState<TimeOfDay?>(null);
   final lessonDurationState = useFullState<Duration>(Duration.zero);
@@ -64,7 +68,7 @@ CreateAppointmentScreenState useCreateAppointmentScreenState({required CreateApp
     startTimeState.setValue(day);
   }
 
-  calculatePrice(Duration time){
+  calculatePrice(Duration time) {
     final subjectPrice = args.tutor.subjects[args.subject]!;
     final lessonPrice = time.inMinutes * subjectPrice / 60;
 
@@ -90,15 +94,9 @@ CreateAppointmentScreenState useCreateAppointmentScreenState({required CreateApp
 
   final submitState = useSubmitState();
 
-
   submit() {
-     submitState.run(
-            () async {
-          await Future.delayed(Duration(milliseconds: 1000));
-        }
-    );
+    submitState.run(() async {});
   }
-
 
   return CreateAppointmentScreenState(
     startTimeState: startTimeState,
