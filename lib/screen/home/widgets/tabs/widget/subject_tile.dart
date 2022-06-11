@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../config/app_colors.dart';
+
 class SubjectTile extends StatelessWidget {
   final Function() onTap;
   final String subjectName;
@@ -16,17 +18,20 @@ class SubjectTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       child: GestureDetector(
         onTap: onTap,
         child: Chip(
+          backgroundColor: AppColors.primaryColor,
           label: Text(
-            subjectName,
+            subjectName.toUpperCase(),
             style: TextStyle(
-              color: isSelected ? Colors.black : Colors.grey,
+              color: isSelected ? Colors.white : Colors.black,
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          elevation: 2,
+          elevation: 4,
         ),
       ),
     );

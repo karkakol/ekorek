@@ -8,6 +8,9 @@ class TextInput extends StatelessWidget {
   final Widget? prefix;
   final String? hint;
   final void Function(String)? onChange;
+  final InputBorder? border;
+  final InputBorder? focusedBorder;
+  final EdgeInsets? contentPadding;
 
   const TextInput({
     Key? key,
@@ -16,6 +19,9 @@ class TextInput extends StatelessWidget {
     this.prefix,
     this.hint,
     this.onChange,
+    this.border,
+    this.focusedBorder,
+    this.contentPadding,
   }) : super(key: key);
 
   @override
@@ -37,8 +43,13 @@ class TextInput extends StatelessWidget {
       },
       decoration: InputDecoration(
         labelText: label,
-        prefix: prefix,
+        prefixIcon: prefix,
         hintText: hint,
+        border: focusedBorder,
+        enabledBorder: focusedBorder,
+        focusedBorder: focusedBorder,
+        contentPadding: contentPadding,
+
       ),
     );
   }
