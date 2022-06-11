@@ -14,7 +14,10 @@ class AppCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      child: child,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: child,
+      ),
     );
   }
 }

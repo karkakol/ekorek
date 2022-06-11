@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:utopia_utils/utopia_utils_extensions.dart';
 import 'package:utopia_widgets/layout/form_layout.dart';
 
+import '../../../common/widgets/appointment_details/appointment_details.dart';
 import '../../../common/widgets/button/button.dart';
 import '../../../common/widgets/tutor_info/tutor_info.dart';
 import '../../../common/widgets/user_address/user_address.dart';
@@ -34,7 +35,12 @@ class CreateAppointmentScreenView extends StatelessWidget {
               subject: state.subject,
             ),
             _buildPickers(context),
-            _buildAppointmentInfo(context),
+            AppointmentDetails(
+              pickedTime: state.startTimeState.value,
+              price: state.lessonPrice,
+              pickedDay: state.pickedDayState.value,
+              duration: state.lessonDurationState.value,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: UserAddress(user: state.tutor),
@@ -89,59 +95,6 @@ class CreateAppointmentScreenView extends StatelessWidget {
           onPressed: state.addTime,
         )
       ],
-    );
-  }
-
-  Widget _buildAppointmentInfo(BuildContext context) {
-    final pickedDay = state.pickedDayState.value;
-    final pickedDayText = pickedDay == null ? "----" : pickedDay.toString();
-
-    final pickedTime = state.startTimeState.value;
-    final pickedTimeText = pickedTime == null ? "----" : pickedTime.toString();
-
-    final durationText = state.lessonDurationState.value.displayClockTime();
-
-    return Card(
-      elevation: 4,
-      margin: EdgeInsets.all(16),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Picked Day: ", style: context.themeData.textTheme.bodyText1),
-                Text(pickedDayText, style: context.themeData.textTheme.bodyText1),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Picked hour: ", style: context.themeData.textTheme.bodyText1),
-                Text(pickedTimeText, style: context.themeData.textTheme.bodyText1),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Lesson duration: ", style: context.themeData.textTheme.bodyText1),
-                Text(durationText, style: context.themeData.textTheme.bodyText1),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Price for lesson: ", style: context.themeData.textTheme.bodyText1),
-                Text(state.lessonPrice.toString(), style: context.themeData.textTheme.bodyText1),
-              ],
-            ),
-          ].separatedWith(SizedBox(height: 16,)),
-        ),
-      ),
     );
   }
 
