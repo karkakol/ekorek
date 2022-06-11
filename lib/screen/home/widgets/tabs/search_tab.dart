@@ -76,7 +76,7 @@ class SearchTab extends HookWidget {
                   borderRadius: BorderRadius.circular(25.0),
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-                prefix:  Icon(
+                prefix:  const Icon(
                   Icons.search,
                   color: AppColors.primaryColor,
                 ),
