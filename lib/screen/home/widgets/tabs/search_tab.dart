@@ -1,4 +1,5 @@
 import 'package:ekorek/model/user/user.dart' as model;
+import 'package:ekorek/screen/create_appointment/state/create_appointemtn_screen_args.dart';
 import 'package:ekorek/screen/home/widgets/tabs/widget/subject_tile.dart';
 import 'package:ekorek/screen/home/widgets/tabs/widget/tutor_tile.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
 import '../../../../app/state/users/users_state.dart';
 import '../../../../common/widgets/text_input/text_input.dart';
@@ -13,7 +15,12 @@ import '../../../../config/config.dart';
 import '../../../../model/user/user.dart';
 
 class SearchTab extends HookWidget {
-  const SearchTab({Key? key}) : super(key: key);
+  final Function(CreateAppointmentScreenArgs) navigateToCreateAppointment;
+
+  const SearchTab({
+    Key? key,
+    required this.navigateToCreateAppointment,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +28,14 @@ class SearchTab extends HookWidget {
 
     final remotesSubjects = useRef<List<String>>(Config.remote.subjects);
 
-    final displayedTutorsState = useState<IList<model.User>>(usersState.tutors);
+    final displayedTutorsState = useState<IList<model.UserTutor>>(usersState.tutors);
 
     final searchFieldState = useFieldState();
     final currentSubject = useState<String>(Config.remote.subjects.first);
 
     final filterTutors = useCallback<
-        IList<model.User> Function(
-      IList<model.User> allTutors,
+        IList<model.UserTutor> Function(
+      IList<model.UserTutor> allTutors,
       String currentSubject,
       String phrase,
     )>((allUsers, subject, phrase) {
@@ -79,6 +86,7 @@ class SearchTab extends HookWidget {
               return TutorTile(
                 tutor: displayedTutorsState.value[index],
                 subject: currentSubject.value,
+                onTap: navigateToCreateAppointment,
               );
             },
             childCount: displayedTutorsState.value.length,

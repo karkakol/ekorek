@@ -35,16 +35,13 @@ class HomeScreenView extends StatelessWidget {
     return TabBarView(
       controller: state.tabController,
       children: [
-        SearchTab(),
+         SearchTab(navigateToCreateAppointment: state.navigateToCreateAppointment),
         _buildMeetings(),
         _buildProfile(),
       ],
     );
   }
 
-  Widget _buildSearch() {
-    return Center(child: Text("Search"));
-  }
 
   Widget _buildProfile() {
     return state.user == null

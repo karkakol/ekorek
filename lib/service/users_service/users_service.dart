@@ -10,19 +10,19 @@ class UsersService {
 
   
 
-  Future<IList<model.User>> getTutorsUsers() async {
+  Future<IList<model.UserTutor>> getTutorsUsers() async {
     final usersQuery = _firestore.collection(CollectionNames.users);
     final tutorsResponse = (await usersQuery.where('type', isEqualTo:  UserType.TUTOR.display).get())
         .docs
-        .map((e) => model.User.fromJson(e.data()));
+        .map((e) => model.UserTutor.fromJson(e.data()));
 
     return tutorsResponse.toIList();
   }
 
-  Stream<IList<model.User>> tutorsStream() {
+  Stream<IList<model.UserTutor>> tutorsStream() {
     return _firestore.collection(CollectionNames.users).snapshots().map((event) => event.docs
         .where((e) => e.data()['type'] == UserType.TUTOR.display)
-        .map((e) => model.User.fromJson(e.data()))
+        .map((e) => model.UserTutor.fromJson(e.data()))
         .toIList());
   }
 }

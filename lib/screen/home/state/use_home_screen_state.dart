@@ -10,12 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
 import 'package:utopia_utils/utopia_utils_extensions.dart';
 
+import '../../create_appointment/state/create_appointemtn_screen_args.dart';
+
 class HomeScreenState {
   final SubmitState submitState;
   final TabController tabController;
   final void Function() onSignOut;
   final void Function() onTutorTap;
   final model.User? user;
+  final Function(CreateAppointmentScreenArgs) navigateToCreateAppointment;
 
   HomeScreenState({
     required this.submitState,
@@ -23,10 +26,11 @@ class HomeScreenState {
     required this.onSignOut,
     required this.onTutorTap,
     required this.user,
+    required this.navigateToCreateAppointment,
   });
 }
 
-HomeScreenState useHomeScreenState() {
+HomeScreenState useHomeScreenState({required Function(CreateAppointmentScreenArgs args) navigateToCreateAppointment}) {
   final authService = useInjected<AuthService>();
   final errorState = useState<String?>(null);
   final context = useContext();
@@ -58,5 +62,6 @@ HomeScreenState useHomeScreenState() {
       final tutor = await userService.getUser("HwrM1nnCHQS6oAlofYt8SutQccU2");
       if (tutor != null) await ProfileScreen.navigate(context: context, user: tutor);
     },
+    navigateToCreateAppointment: navigateToCreateAppointment
   );
 }

@@ -1,6 +1,8 @@
+import 'package:ekorek/screen/create_appointment/create_appointment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
+import 'package:utopia_utils/utopia_utils_extensions.dart';
 
 import 'state/use_home_screen_state.dart';
 import 'view/home_screen_view.dart';
@@ -13,7 +15,14 @@ class HomeScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = useHomeScreenState();
+
+    final navigator = context.navigator;
+
+    final state = useHomeScreenState(
+      navigateToCreateAppointment: (args) {
+        navigator.pushNamed(CreateAppointmentScreen.route, arguments: args);
+      }
+    );
     return HomeScreenView(state: state);
   }
 }
