@@ -1,3 +1,4 @@
+import 'package:ekorek/config/app_colors.dart';
 import 'package:ekorek/model/subject/subject.dart';
 import 'package:ekorek/model/user/user.dart';
 import 'package:maps_launcher/maps_launcher.dart';
@@ -14,17 +15,14 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildHeader(context),
-          _buildAddress(context),
-          if (user is UserTutor) _buildSubjects(context),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildHeader(context),
+        _buildAddress(context),
+        if (user is UserTutor) _buildSubjects(context),
+      ],
     );
   }
 
@@ -93,7 +91,7 @@ class Profile extends StatelessWidget {
                 onPressed: () => MapsLauncher.launchQuery(user.queryAddress),
                 icon: Icon(
                   Icons.location_on_rounded,
-                  color: Colors.blueAccent,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ],
@@ -127,6 +125,7 @@ class Profile extends StatelessWidget {
               Wrap(
                 children: subjects.map((e) => _buildSubject(e)).toList(),
                 spacing: 8,
+                runSpacing: 8,
               ),
             ],
           ),
@@ -154,9 +153,11 @@ class Profile extends StatelessWidget {
         color: Colors.black,
         fontWeight: FontWeight.bold,
       ),
-      child: Material(
-        color: Colors.blueAccent,
-        borderRadius: BorderRadius.circular(8),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.primaryColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Text(

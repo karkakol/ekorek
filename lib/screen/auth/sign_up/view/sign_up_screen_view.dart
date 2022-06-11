@@ -2,9 +2,10 @@ import 'package:ekorek/common/widgets/button/button.dart';
 import 'package:ekorek/common/widgets/dropdown/dropdown.dart';
 import 'package:ekorek/common/widgets/subjects_picker/subjects_input.dart';
 import 'package:ekorek/common/widgets/text_input/text_input.dart';
-import 'package:ekorek/model/subject/subject.dart';
+import 'package:ekorek/config/app_colors.dart';
 import 'package:ekorek/model/user/user_type.dart';
 import 'package:ekorek/screen/auth/sign_up/state/use_sign_up_screen_state.dart';
+import 'package:ekorek/utill/context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_utils/utopia_utils_extensions.dart';
 import 'package:utopia_widgets/layout/form_layout.dart';
@@ -18,25 +19,31 @@ class SignUpScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(color: AppColors.darkColor),
       ),
       body: FormLayout.simple(
         backgroundColor: Colors.white,
         fadeBarHeight: 32,
-        content: _buildForm(),
+        content: _buildForm(context),
         bottom: _buildSubmitButton(),
       ),
     );
   }
 
-  Widget _buildForm() {
+  Widget _buildForm(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          _buildSignInSection(),
-          Divider(height: 16, thickness: 1),
+          Text(
+            "Create your Account",
+            style: context.themeData.textTheme.headline5,
+            textAlign: TextAlign.left,
+          ),
           TextInput(
             fieldState: state.emailFieldState,
             label: "Email",
@@ -114,6 +121,7 @@ class SignUpScreenView extends StatelessWidget {
         Button(
           onTap: state.onSignIn,
           text: "Sign In",
+          expanded: false,
         ),
       ],
     );
