@@ -107,12 +107,16 @@ class AppointmentWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 16),
-                Text(
-                  appointment.lessonLength.displayHoursMinutes,
-                  style: TextStyle(
-                    color: AppColors.lightColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                Flexible(
+                  child: Text(
+                    appointment.lessonLength.displayHoursMinutes,
+                    style: TextStyle(
+                      color: AppColors.lightColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                 ),
               ],

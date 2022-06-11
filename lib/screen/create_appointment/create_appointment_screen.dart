@@ -1,4 +1,6 @@
 import 'package:ekorek/screen/create_appointment/state/create_appointemtn_screen_args.dart';
+import 'package:ekorek/screen/meeting_details/meetings_details_screen.dart';
+import 'package:ekorek/screen/meeting_details/meetings_details_screen_args.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_arch/utopia_arch.dart';
@@ -22,7 +24,7 @@ class CreateAppointmentScreen extends HookWidget {
 
     final state = useCreateAppointmentScreenState(
       args: args,
-      navigateToDetailedMeeting: () {},
+      navigateToDetailedMeeting: (appointment)=> navigator.pushReplacementNamed(MeetingDetailsScreen.route, arguments: MeetingsDetailsScreenArgs(appointment: appointment)),
     );
 
     return CreateAppointmentScreenView(state: state);

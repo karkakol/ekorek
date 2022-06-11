@@ -41,6 +41,10 @@ HomeScreenState useHomeScreenState({required Function(CreateAppointmentScreenArg
 
   final submitState = useSubmitState();
 
+  useSimpleEffect(() {
+    FocusScope.of(context).unfocus();
+  }, [tabController.index]);
+
   Future<void> onSignOut() async {
     await submitState.runSimple<void, FirebaseAuthException>(
         beforeSubmit: () => errorState.value = null,

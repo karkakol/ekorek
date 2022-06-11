@@ -47,6 +47,6 @@ class AppointmentsService {
     return _firestore
         .collection(CollectionNames.appointments)
         .snapshots()
-        .map((event) => event.docs.map((e) => Appointment.fromJson(e.data())).toIList());
+        .map((event) => event.docs.map((e) => Appointment.fromJson(e.data())).toIList().sort((a,b) => a.startTime.compareTo(b.startTime)));
   }
 }

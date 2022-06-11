@@ -56,7 +56,7 @@ class CreateAppointmentScreenState {
 const _durationStep = 15;
 
 CreateAppointmentScreenState useCreateAppointmentScreenState({required CreateAppointmentScreenArgs args, required
-Function() navigateToDetailedMeeting}) {
+Function(Appointment) navigateToDetailedMeeting}) {
   final appointmentService = useInjected<AppointmentsService>();
   final userState = useProvided<UserState>();
 
@@ -130,6 +130,7 @@ Function() navigateToDetailedMeeting}) {
       );
 
       await appointmentService.add(newAppointment);
+      navigateToDetailedMeeting(newAppointment);
     });
   }
 
