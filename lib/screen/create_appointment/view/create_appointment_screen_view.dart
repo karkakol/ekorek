@@ -25,7 +25,7 @@ class CreateAppointmentScreenView extends StatelessWidget {
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.of(context).maybePop(),
           ),
-          title: Text('Set an appointment')),
+          title: Text('Appointment')),
       body: FormLayout.simple(
         backgroundColor: Colors.transparent,
         content: Column(
@@ -34,17 +34,17 @@ class CreateAppointmentScreenView extends StatelessWidget {
               tutor: state.tutor,
               subject: state.subject,
             ),
-            _buildPickers(context),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: UserAddress(user: state.tutor),
+            ),
             AppointmentDetails(
               pickedTime: state.startTimeState.value,
               price: state.lessonPrice,
               pickedDay: state.pickedDayState.value,
               duration: state.lessonDurationState.value,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: UserAddress(user: state.tutor),
-            ),
+            _buildPickers(context),
           ],
         ),
         bottom: _buildButton(context),
