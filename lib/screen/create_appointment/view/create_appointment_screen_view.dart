@@ -34,10 +34,7 @@ class CreateAppointmentScreenView extends StatelessWidget {
               tutor: state.tutor,
               subject: state.subject,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: UserAddress(user: state.tutor),
-            ),
+            UserAddress(user: state.tutor),
             AppointmentDetails(
               pickedTime: state.startTimeState.value,
               price: state.lessonPrice,
