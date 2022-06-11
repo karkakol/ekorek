@@ -1,5 +1,6 @@
 import 'package:ekorek/config/app_colors.dart';
 import 'package:ekorek/model/user/user.dart' ;
+import 'package:ekorek/screen/profile/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +20,7 @@ class TutorInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => ProfileScreen.navigate(context: context, user: tutor),
       leading: const Icon(Icons.school, color: AppColors.primaryColor),
       contentPadding: const EdgeInsets.all(24),
       title: Text(tutor.fullName),

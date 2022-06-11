@@ -1,9 +1,12 @@
 import 'package:ekorek/config/app_colors.dart';
 import 'package:ekorek/config/app_theme.dart';
 import 'package:ekorek/model/appointment/appointment.dart';
+import 'package:ekorek/screen/meeting_details/meetings_details_screen.dart';
+import 'package:ekorek/screen/meeting_details/meetings_details_screen_args.dart';
 import 'package:ekorek/utill/duration_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:utopia_utils/utopia_utils.dart';
 
 class AppointmentWidget extends StatelessWidget {
   final Appointment appointment;
@@ -20,19 +23,22 @@ class AppointmentWidget extends StatelessWidget {
       borderRadius: BorderRadius.circular(16),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: SizedBox(
-          height: 100,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: _buildDate(),
-              ),
-              Expanded(
-                flex: 4,
-                child: _buildContent(),
-              ),
-            ],
+        child: InkWell(
+          onTap: () => context.navigator.pushNamed(MeetingDetailsScreen.route, arguments: MeetingsDetailsScreenArgs(appointment: appointment)),
+          child: SizedBox(
+            height: 100,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: _buildDate(),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: _buildContent(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -101,12 +107,16 @@ class AppointmentWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 16),
-                Text(
-                  appointment.lessonLength.displayHoursMinutes,
-                  style: TextStyle(
-                    color: AppColors.lightColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
+                Flexible(
+                  child: Text(
+                    appointment.lessonLength.displayHoursMinutes,
+                    style: TextStyle(
+                      color: AppColors.lightColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                 ),
               ],

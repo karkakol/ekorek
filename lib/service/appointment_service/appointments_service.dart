@@ -14,6 +14,11 @@ class AppointmentsService {
     await _firestore.collection(CollectionNames.appointments).doc(appointment.uuid).set(appointment.toJson());
   }
 
+  Future<void> cancel(Appointment appointment) async {
+    Logger().i("Appointment Remove: ${appointment.toJson()}");
+    await _firestore.collection(CollectionNames.appointments).doc(appointment.uuid).delete();
+  }
+
   Future<Appointment?> getAppointmentById(String uuid) async {
     final result = (await _firestore.collection(CollectionNames.appointments).doc(uuid).get()).data();
     if (result != null) return Appointment.fromJson(result);
@@ -42,6 +47,6 @@ class AppointmentsService {
     return _firestore
         .collection(CollectionNames.appointments)
         .snapshots()
-        .map((event) => event.docs.map((e) => Appointment.fromJson(e.data())).toIList());
+        .map((event) => event.docs.map((e) => Appointment.fromJson(e.data())).toIList().sort((a,b) => a.startTime.compareTo(b.startTime)));
   }
 }
