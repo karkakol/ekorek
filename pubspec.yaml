@@ -31,7 +31,9 @@ dependencies:
   utopia_arch: ^0.4.0+1
   freezed_annotation: ^2.0.3
 
-
+  #widgets
+  time_picker_widget: ^1.0.0+10
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:

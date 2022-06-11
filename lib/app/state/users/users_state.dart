@@ -10,7 +10,7 @@ import 'package:utopia_hooks/utopia_hooks.dart';
 import '../../../service/users_service/users_service.dart';
 
 class UsersState {
-  final IList<model.User> tutors;
+  final IList<model.UserTutor> tutors;
   final Function() getTutors;
 
   const UsersState({
@@ -27,14 +27,14 @@ class UsersStateProvider extends HookStateProviderWidget<UsersState> {
   UsersState use() {
     final usersService = useInjected<UsersService>();
 
-    final tutorsState = useState<IList<model.User>>(<model.User>[].lock);
+    final tutorsState = useState<IList<model.UserTutor>>(<model.UserTutor>[].lock);
     
-    final usersStream = useStream(usersService.tutorsStream());
+    final tutorsStream = useStream(usersService.tutorsStream());
 
     useSimpleEffect(() async {
-      if(usersStream.data==null) return;
-      tutorsState.value = usersStream.data!;
-    },[usersStream.data]);
+      if(tutorsStream.data==null) return;
+      tutorsState.value = tutorsStream.data!;
+    },[tutorsStream.data]);
 
 
     return UsersState(

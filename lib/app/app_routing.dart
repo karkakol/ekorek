@@ -1,6 +1,7 @@
 import 'package:ekorek/screen/auth/sign_in/sign_in_screen.dart';
 import 'package:ekorek/screen/auth/sign_up/sign_up_screen.dart';
 import 'package:ekorek/screen/auth/welcome/welcome_screen.dart';
+import 'package:ekorek/screen/create_appointment/create_appointment_screen.dart';
 import 'package:ekorek/screen/home/home_screen.dart';
 import 'package:ekorek/screen/profile/profile_screen.dart';
 import 'package:ekorek/screen/splash/splash_screen.dart';
@@ -14,6 +15,7 @@ class AppRouting {
     HomeScreen.route: HomeScreen.routeConfig,
     WelcomeScreen.route: WelcomeScreen.routeConfig,
     ProfileScreen.route: ProfileScreen.routeConfig,
+    CreateAppointmentScreen.route: CreateAppointmentScreen.routeConfig,
   };
 
   static const initialRoute = SplashScreen.route;
