@@ -37,7 +37,7 @@ class MeetingDetailsView extends StatelessWidget {
       backgroundColor: Colors.white,
       content: Column(
         children: [
-          Container(child: TutorInfo(tutor: tutor as UserTutor, subject: state.appointment.subject.name)),
+          TutorInfo(tutor: tutor as UserTutor, subject: state.appointment.subject.name),
           UserAddress(user: state.tutor!),
           AppointmentDetails(
             duration: state.appointment.lessonLength,

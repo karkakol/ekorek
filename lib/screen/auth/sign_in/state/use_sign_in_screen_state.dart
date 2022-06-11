@@ -58,7 +58,7 @@ SignInScreenState useSignInScreenState() {
   }
 
   Future<void> navigateToSignUp() async {
-    await context.navigator.pushReplacementNamed(SignUpScreen.route);
+    await context.navigator.pushNamed(SignUpScreen.route);
   }
 
   return SignInScreenState(
