@@ -1,9 +1,14 @@
+import 'package:ekorek/config/app_colors.dart';
+import 'package:ekorek/utill/context_extension.dart';
 import 'package:ekorek/utill/duration_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:utopia_widgets/layout/form_layout.dart';
 
+import '../../../common/widgets/appointment_details/appointment_details.dart';
+import '../../../common/widgets/button/button.dart';
 import '../../../common/widgets/tutor_info/tutor_info.dart';
+import '../../../common/widgets/user_address/user_address.dart';
 import '../state/create_appointment_screen_state.dart';
 
 class CreateAppointmentScreenView extends StatelessWidget {
@@ -15,63 +20,54 @@ class CreateAppointmentScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.of(context).maybePop();
-              }),
-          title: Text('Set an appointment')),
-      body: ListView(
-        children: [
-          TutorInfo(
-            tutor: state.tutor,
-            subject: state.subject,
-          ),
-          _buildDayPicker(context),
-          _buildStartTimePicker(context),
-          _buildLessonDuration(context),
-          _buildPrize(context),
-          _buildButton(context),
-        ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).maybePop(),
+        ),
+        title: Text('Appointment'),
+      ),
+      body: FormLayout.simple(
+        backgroundColor: Colors.transparent,
+        content: Column(
+          children: [
+            TutorInfo(
+              tutor: state.tutor,
+              subject: state.subject,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: UserAddress(user: state.tutor),
+            ),
+            AppointmentDetails(
+              pickedTime: state.startTimeState.value,
+              price: state.lessonPrice,
+              pickedDay: state.pickedDayState.value,
+              duration: state.lessonDurationState.value,
+            ),
+            _buildPickers(context),
+          ],
+        ),
+        bottom: _buildButton(context),
       ),
     );
   }
 
-  Widget _buildDayPicker(BuildContext context) {
-    final pickedDay = state.pickedDayState.value;
-    final pickedDayText = pickedDay == null ? "----" : pickedDay.toString();
+  Widget _buildPickers(BuildContext context) {
     return Row(
       children: [
-        Text('Pick day'),
-        IconButton(
-          icon: const Icon(Icons.calendar_today),
-          onPressed: () => state.pickDay(context),
+        Expanded(
+          child: IconButton(
+            icon: const Icon(Icons.calendar_today, color: AppColors.primaryColor),
+            onPressed: () => state.pickDay(context),
+          ),
         ),
-        Text(pickedDayText),
-      ],
-    );
-  }
-
-  Widget _buildStartTimePicker(BuildContext context) {
-    final pickedTime = state.startTimeState.value;
-    final pickedTimeText = pickedTime == null ? "----" : pickedTime.toString();
-    return Row(
-      children: [
-        Text('Pick hour'),
-        IconButton(
-          icon: const Icon(Icons.access_time),
-          onPressed: () => state.pickTime(context),
+        Expanded(
+          child: IconButton(
+            icon: const Icon(Icons.access_time, color: AppColors.primaryColor),
+            onPressed: () => state.pickTime(context),
+          ),
         ),
-        Text(pickedTimeText),
-      ],
-    );
-  }
-
-  Widget _buildLessonDuration(BuildContext context) {
-    return Row(
-      children: [
-        Text('Set lesson duration'),
-        _buildLessonDurationButton(context),
+        Expanded(flex: 2, child: _buildLessonDurationButton(context)),
       ],
     );
   }
@@ -80,31 +76,37 @@ class CreateAppointmentScreenView extends StatelessWidget {
     final durationText = state.lessonDurationState.value.displayClockTime();
 
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         IconButton(
-          icon: const Icon(Icons.remove),
+          icon: const Icon(Icons.remove, color: AppColors.primaryColor, size: 28),
           onPressed: state.removeTime,
         ),
-        Text(durationText),
+        Text(
+          durationText,
+          style: context.themeData.textTheme.headline6,
+        ),
         IconButton(
-          icon: const Icon(Icons.add),
+          icon: const Icon(
+            Icons.add,
+            color: AppColors.primaryColor,
+            size: 28,
+          ),
           onPressed: state.addTime,
         )
       ],
     );
   }
 
-  Widget _buildPrize(BuildContext context) {
-    return Text("Price for a lesson is: ${state.lessonPrice}");
-  }
-
   Widget _buildButton(BuildContext context) {
-    return OutlinedButton(
-      onPressed: state.submit,
-      child: state.submitState.isSubmitInProgress ? SpinKitThreeBounce(
-        color: Colors.blue,
-        size: 20.0,
-      ): Text("Set an appointment"),
+    return Padding(
+      padding: EdgeInsets.all(32),
+      child: Button(
+        onTap: state.submit,
+        text: "Continue",
+        isLoading: state.submitState.isSubmitInProgress,
+        enabled: state.submitEnabled,
+      ),
     );
   }
 }
