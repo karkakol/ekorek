@@ -13,6 +13,7 @@ class User with _$User {
   @FreezedUnionValue('STUDENT')
   factory User.student({
     // common
+    @Default('') String id,
     @Default(UserType.STUDENT) UserType type,
     required String email,
     required String firstName,
@@ -28,6 +29,7 @@ class User with _$User {
   @FreezedUnionValue('TUTOR')
   factory User.tutor({
     // common
+    @Default('') String id,
     @Default(UserType.TUTOR) UserType type,
     required String email,
     required String firstName,
@@ -45,5 +47,9 @@ class User with _$User {
 
 extension UserExtension on User {
   String get fullName => firstName + " " + lastName;
+  String get queryAddress => street + " " + number + ", " + city + " " + postalCode;
 }
 
+extension UserTutorExtension on UserTutor {
+  List<Subject> get subjectsList => subjects.entries.map((e) => Subject(name: e.key, pricePerHour: e.value)).toList();
+}

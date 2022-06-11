@@ -1,5 +1,5 @@
 import 'package:ekorek/common/widgets/profile/profile.dart';
-import 'package:ekorek/model/user/user.dart';
+import 'package:ekorek/config/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../state/use_profile_screen_state.dart';
@@ -13,11 +13,15 @@ class ProfileScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Profile ${state.user.fullName}"),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        automaticallyImplyLeading: true,
+        iconTheme: IconThemeData(color: AppColors.darkColor),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         child: Profile(user: state.user),
-      )
+      ),
     );
   }
 }

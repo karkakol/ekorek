@@ -1,8 +1,10 @@
 import 'package:ekorek/app/app_routing.dart';
+import 'package:ekorek/app/state/appointments/appointments_state.dart';
 import 'package:ekorek/app/state/auth/auth_state.dart';
 import 'package:ekorek/app/state/setup/setup_state.dart';
 import 'package:ekorek/app/state/user/user_state.dart';
 import 'package:ekorek/app/state/users/users_state.dart';
+import 'package:ekorek/config/app_theme.dart';
 import 'package:ekorek/config/config.dart';
 import 'package:ekorek/di/injector.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,7 @@ class _AppState extends State<App> {
         AuthStateProvider(),
         UserStateProvider(),
         UsersStateProvider(),
+        AppointmentsStateProvider(),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -42,7 +45,9 @@ class _AppState extends State<App> {
         onGenerateRoute: (settings) => RouteConfig.generateRoute(AppRouting.routes, settings),
         navigatorObservers: [RouteConfig.createNavigationObserver(AppRouting.routes)],
         initialRoute: AppRouting.initialRoute,
+        theme: AppTheme.themeData,
       ),
     );
   }
+
 }

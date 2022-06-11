@@ -1,4 +1,5 @@
 import 'package:ekorek/config/config.dart';
+import 'package:ekorek/service/appointment_service/appointments_service.dart';
 import 'package:ekorek/service/auth_service/auth_service.dart';
 import 'package:ekorek/service/remote_config_service/remote_config_service.dart';
 import 'package:ekorek/service/user_service/user_service.dart';
@@ -13,7 +14,8 @@ Injector setupInjector() {
     ..registerSingleton<UserService>(() => UserService())
     ..registerSingleton<AuthService>(() => AuthService(userService: injector.get()))
     ..registerSingleton<UsersService>(() => UsersService())
-    ..registerSingleton<RemoteConfigService>(() => RemoteConfigService());
+    ..registerSingleton<RemoteConfigService>(() => RemoteConfigService())
+    ..registerSingleton<AppointmentsService>(() => AppointmentsService());
   return injector;
 }
 

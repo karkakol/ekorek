@@ -9,9 +9,11 @@ import 'package:utopia_hooks/utopia_hooks.dart';
 
 class UserState {
   final model.User? user;
+  final Future<model.User?> Function() refreshUser;
 
   const UserState({
     required this.user,
+    required this.refreshUser,
   });
 }
 
@@ -26,8 +28,16 @@ class UserStateProvider extends HookStateProviderWidget<UserState> {
 
     useSimpleEffect(() async {
       if (authState.status == AuthStatus.AUTHORIZED) userState.value = await userService.getCurrentUser();
+      else userState.value = null;
     }, [authState.status]);
 
-    return UserState(user: userState.value);
+    return UserState(
+      user: userState.value,
+      refreshUser: () async {
+        final user = await userService.getCurrentUser();
+        userState.value = user;
+        return user;
+      },
+    );
   }
 }

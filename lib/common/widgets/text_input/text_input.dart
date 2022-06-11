@@ -20,9 +20,12 @@ class TextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StatelessTextEditingControllerWrapper(
-      value: fieldState.value,
-      child: _buildTextFromField,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: StatelessTextEditingControllerWrapper(
+        value: fieldState.value,
+        child: _buildTextFromField,
+      ),
     );
   }
 

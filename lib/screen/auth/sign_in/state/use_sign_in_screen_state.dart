@@ -1,7 +1,8 @@
+import 'package:ekorek/app/state/appointments/appointments_state.dart';
+import 'package:ekorek/app/state/user/user_state.dart';
 import 'package:ekorek/screen/auth/sign_up/sign_up_screen.dart';
 import 'package:ekorek/screen/home/home_screen.dart';
 import 'package:ekorek/service/auth_service/auth_service.dart';
-import 'package:ekorek/service/users_service/users_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:utopia_arch/utopia_arch.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
@@ -18,7 +19,6 @@ class SignInScreenState {
   final void Function() onSignIn;
   final void Function() onSignUp;
 
-
   SignInScreenState({
     required this.emailFieldState,
     required this.passwordFieldState,
@@ -33,6 +33,7 @@ class SignInScreenState {
 SignInScreenState useSignInScreenState() {
   final authService = useInjected<AuthService>();
   final usersState = useProvided<UsersState>();
+  final userState = useProvided<UserState>();
 
   final emailFieldState = useFieldState();
   final passwordFieldState = useFieldState();
@@ -48,6 +49,7 @@ SignInScreenState useSignInScreenState() {
       submit: () async {
         await authService.signIn(email: emailFieldState.value, password: passwordFieldState.value);
         await usersState.getTutors();
+        await userState.refreshUser();
       },
       mapError: (error) => error is FirebaseAuthException ? error : null,
       afterKnownError: (error) => errorState.value = error.message,

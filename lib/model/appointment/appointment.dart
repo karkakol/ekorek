@@ -10,6 +10,7 @@ part 'appointment.g.dart';
 class Appointment with _$Appointment {
   const Appointment._();
 
+  @JsonSerializable(explicitToJson: true)
   factory Appointment({
     //uuid będzie sie składać z uuid+studentId+tutorId
     required String uuid,
