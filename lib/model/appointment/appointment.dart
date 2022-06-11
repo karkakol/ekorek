@@ -20,9 +20,8 @@ class Appointment with _$Appointment {
     required DateTime endTime,
     required Duration lessonLength,
     required Subject subject,
+    required double price,
   }) = _Appointment;
 
   factory Appointment.fromJson(Map<String, dynamic> json) => _$AppointmentFromJson(json);
-
-
 }
