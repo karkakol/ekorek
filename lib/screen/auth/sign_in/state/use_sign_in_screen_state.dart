@@ -19,7 +19,6 @@ class SignInScreenState {
   final void Function() onSignIn;
   final void Function() onSignUp;
 
-
   SignInScreenState({
     required this.emailFieldState,
     required this.passwordFieldState,
@@ -35,7 +34,6 @@ SignInScreenState useSignInScreenState() {
   final authService = useInjected<AuthService>();
   final usersState = useProvided<UsersState>();
   final userState = useProvided<UserState>();
-  final appointmentsState = useProvided<AppointmentsState>();
 
   final emailFieldState = useFieldState();
   final passwordFieldState = useFieldState();
@@ -51,8 +49,7 @@ SignInScreenState useSignInScreenState() {
       submit: () async {
         await authService.signIn(email: emailFieldState.value, password: passwordFieldState.value);
         await usersState.getTutors();
-        final user = await userState.refreshUser();
-        await appointmentsState.getAppointments(user!);
+        await userState.refreshUser();
       },
       mapError: (error) => error is FirebaseAuthException ? error : null,
       afterKnownError: (error) => errorState.value = error.message,
