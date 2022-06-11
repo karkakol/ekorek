@@ -1,4 +1,5 @@
 import 'package:ekorek/app/app_routing.dart';
+import 'package:ekorek/app/state/appointments/appointments_state.dart';
 import 'package:ekorek/app/state/auth/auth_state.dart';
 import 'package:ekorek/app/state/setup/setup_state.dart';
 import 'package:ekorek/app/state/user/user_state.dart';
@@ -35,6 +36,7 @@ class _AppState extends State<App> {
         AuthStateProvider(),
         UserStateProvider(),
         UsersStateProvider(),
+        AppointmentsStateProvider(),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

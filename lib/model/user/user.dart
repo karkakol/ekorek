@@ -13,6 +13,7 @@ class User with _$User {
   @FreezedUnionValue('STUDENT')
   factory User.student({
     // common
+    @Default('') String id,
     @Default(UserType.STUDENT) UserType type,
     required String email,
     required String firstName,
@@ -28,6 +29,7 @@ class User with _$User {
   @FreezedUnionValue('TUTOR')
   factory User.tutor({
     // common
+    @Default('') String id,
     @Default(UserType.TUTOR) UserType type,
     required String email,
     required String firstName,
