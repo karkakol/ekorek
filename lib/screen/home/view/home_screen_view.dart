@@ -36,24 +36,26 @@ class HomeScreenView extends StatelessWidget {
     return TabBarView(
       controller: state.tabController,
       children: [
-         SearchTab(navigateToCreateAppointment: state.navigateToCreateAppointment),
-         MeetingsPage(),
+        SearchTab(navigateToCreateAppointment: state.navigateToCreateAppointment),
+        MeetingsPage(),
         _buildProfile(),
       ],
     );
   }
 
-
   Widget _buildProfile() {
     return state.user == null
         ? Center(child: SpinKitCircle(size: 50, color: AppColors.primaryColor))
         : Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          padding: const EdgeInsets.symmetric(vertical: 24),
           child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Profile(user: state.user!),
-                Button(onTap: state.onSignOut, text: 'Sign Out'),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Button(onTap: state.onSignOut, text: 'Sign Out'),
+                ),
               ].separatedWith(SizedBox(height: 8)),
             ),
         );
