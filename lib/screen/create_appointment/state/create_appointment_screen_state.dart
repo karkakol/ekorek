@@ -3,9 +3,13 @@ import 'package:ekorek/model/user/user.dart';
 import 'package:ekorek/service/appointment_service/appointments_service.dart';
 import 'package:flutter/material.dart';
 import 'package:utopia_hooks/utopia_hooks.dart';
+import 'package:uuid/uuid.dart';
 
+import '../../../app/state/user/user_state.dart';
 import '../../../common/widgets/pickers/day_picker/day_picker.dart';
 import '../../../common/widgets/pickers/hour_picker/time_picker.dart';
+import '../../../model/appointment/appointment.dart';
+import '../../../model/subject/subject.dart';
 import '../../../utill/hooks/use_full_state.dart';
 import 'create_appointemtn_screen_args.dart';
 
@@ -25,6 +29,8 @@ class CreateAppointmentScreenState {
   final CreateAppointmentScreenArgs screenArgs;
 
   final Function() submit;
+
+  final bool submitEnabled;
   final MutableSubmitState submitState;
 
   const CreateAppointmentScreenState({
@@ -39,6 +45,7 @@ class CreateAppointmentScreenState {
     required this.lessonPrice,
     required this.submitState,
     required this.submit,
+    required this.submitEnabled,
   });
 
   String get subject => screenArgs.subject;
@@ -48,8 +55,10 @@ class CreateAppointmentScreenState {
 
 const _durationStep = 15;
 
-CreateAppointmentScreenState useCreateAppointmentScreenState({required CreateAppointmentScreenArgs args}) {
+CreateAppointmentScreenState useCreateAppointmentScreenState({required CreateAppointmentScreenArgs args, required
+Function() navigateToDetailedMeeting}) {
   final appointmentService = useInjected<AppointmentsService>();
+  final userState = useProvided<UserState>();
 
   final pickedDayState = useFullState<DateTime?>(null);
   final startTimeState = useFullState<TimeOfDay?>(null);
@@ -95,7 +104,41 @@ CreateAppointmentScreenState useCreateAppointmentScreenState({required CreateApp
   final submitState = useSubmitState();
 
   submit() {
-    submitState.run(() async {});
+    submitState.run(() async {
+      final calendarData = pickedDayState.value!;
+      final dayData = startTimeState.value!;
+
+      final startTime = DateTime(
+        calendarData.year,
+        calendarData.month,
+        calendarData.day,
+        dayData.hour,
+        dayData.minute,
+      );
+
+      final endTime = startTime.add(lessonDurationState.value);
+
+      final newAppointment = Appointment(
+        endTime: endTime.toUtc(),
+        price: priceState.value,
+        startTime: startTime.toUtc(),
+        lessonLength: lessonDurationState.value,
+        tutorId: args.tutor.id,
+        studentId: userState.user!.id,
+        subject: Subject(name: args.subject, pricePerHour: args.tutor.subjects[args.subject]!),
+        uuid: Uuid().v4(),
+      );
+
+      await appointmentService.add(newAppointment);
+    });
+  }
+
+  bool submitEnabled(){
+    if(pickedDayState.value == null) return false;
+    if(startTimeState.value == null) return false;
+    if(lessonDurationState.value.inMinutes == 0) return false;
+
+    return true;
   }
 
   return CreateAppointmentScreenState(
@@ -110,5 +153,6 @@ CreateAppointmentScreenState useCreateAppointmentScreenState({required CreateApp
     lessonPrice: priceState.value,
     submitState: submitState,
     submit: submit,
+    submitEnabled: submitEnabled()
   );
 }

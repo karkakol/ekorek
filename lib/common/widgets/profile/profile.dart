@@ -5,6 +5,8 @@ import 'package:maps_launcher/maps_launcher.dart';
 import 'package:ekorek/utill/context_extension.dart';
 import 'package:flutter/material.dart';
 
+import '../user_address/user_address.dart';
+
 class Profile extends StatelessWidget {
   final User user;
 
@@ -20,7 +22,7 @@ class Profile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildHeader(context),
-        _buildAddress(context),
+        UserAddress(user: user),
         if (user is UserTutor) _buildSubjects(context),
       ],
     );
@@ -54,52 +56,6 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildAddress(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Material(
-        color: Colors.white,
-        elevation: 3,
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 8),
-                    child: Text(
-                      "Address",
-                      style: context.themeData.textTheme.bodyLarge,
-                    ),
-                  ),
-                  Text(
-                    user.postalCode + " " + user.city,
-                    style: context.themeData.textTheme.bodyMedium,
-                  ),
-                  Text(
-                    user.street + " " + user.number,
-                    style: context.themeData.textTheme.bodyMedium,
-                  ),
-                ],
-              ),
-              IconButton(
-                onPressed: () => MapsLauncher.launchQuery(user.queryAddress),
-                icon: Icon(
-                  Icons.location_on_rounded,
-                  color: AppColors.primaryColor,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   Widget _buildSubjects(BuildContext context) {
     final subjects = (user as UserTutor).subjectsList;

@@ -2,6 +2,7 @@ import 'package:ekorek/screen/create_appointment/state/create_appointemtn_screen
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:utopia_arch/utopia_arch.dart';
+import 'package:utopia_utils/utopia_utils_extensions.dart';
 
 import './state/create_appointment_screen_state.dart';
 import './view/create_appointment_screen_view.dart';
@@ -14,8 +15,16 @@ class CreateAppointmentScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final navigator = context.navigator;
+
     final args = ModalRoute.of(context)!.settings.arguments as CreateAppointmentScreenArgs;
-    final state = useCreateAppointmentScreenState(args: args);
+
+
+    final state = useCreateAppointmentScreenState(
+      args: args,
+      navigateToDetailedMeeting: () {},
+    );
+
     return CreateAppointmentScreenView(state: state);
   }
 }
