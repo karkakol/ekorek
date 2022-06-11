@@ -3,7 +3,6 @@ import 'package:ekorek/utill/context_extension.dart';
 import 'package:ekorek/utill/duration_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:utopia_utils/utopia_utils_extensions.dart';
 import 'package:utopia_widgets/layout/form_layout.dart';
 
 import '../../../common/widgets/appointment_details/appointment_details.dart';
@@ -21,11 +20,12 @@ class CreateAppointmentScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).maybePop(),
-          ),
-          title: Text('Set an appointment')),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).maybePop(),
+        ),
+        title: Text('Appointment'),
+      ),
       body: FormLayout.simple(
         backgroundColor: Colors.transparent,
         content: Column(
@@ -34,17 +34,17 @@ class CreateAppointmentScreenView extends StatelessWidget {
               tutor: state.tutor,
               subject: state.subject,
             ),
-            _buildPickers(context),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: UserAddress(user: state.tutor),
+            ),
             AppointmentDetails(
               pickedTime: state.startTimeState.value,
               price: state.lessonPrice,
               pickedDay: state.pickedDayState.value,
               duration: state.lessonDurationState.value,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: UserAddress(user: state.tutor),
-            ),
+            _buildPickers(context),
           ],
         ),
         bottom: _buildButton(context),
