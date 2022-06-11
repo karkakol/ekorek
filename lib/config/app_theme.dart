@@ -44,4 +44,13 @@ class AppTheme {
           width: 1,
         ),
       );
+
+  static LinearGradient backgroundGradient = LinearGradient(
+    colors: [
+      AppColors.accentColor,
+      AppColors.primaryColor,
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }

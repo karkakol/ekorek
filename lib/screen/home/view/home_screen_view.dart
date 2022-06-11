@@ -3,6 +3,7 @@ import 'package:ekorek/common/widgets/profile/profile.dart';
 import 'package:ekorek/config/app_colors.dart';
 import 'package:ekorek/screen/home/state/use_home_screen_state.dart';
 import 'package:ekorek/screen/home/widgets/navigation/navigation.dart';
+import 'package:ekorek/screen/meetings/meetings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:utopia_utils/utopia_utils_extensions.dart';
@@ -36,7 +37,7 @@ class HomeScreenView extends StatelessWidget {
       controller: state.tabController,
       children: [
          SearchTab(navigateToCreateAppointment: state.navigateToCreateAppointment),
-        _buildMeetings(),
+         MeetingsPage(),
         _buildProfile(),
       ],
     );
@@ -56,9 +57,5 @@ class HomeScreenView extends StatelessWidget {
               ].separatedWith(SizedBox(height: 8)),
             ),
         );
-  }
-
-  Widget _buildMeetings() {
-    return Center(child: Text("Meetings"));
   }
 }

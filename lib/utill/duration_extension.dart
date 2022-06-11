@@ -12,4 +12,21 @@ extension DurationX on Duration?{
 
     return "$hoursText:$minutesText";
   }
+
+  String get displayHoursMinutes {
+    if (this == null) return '';
+    final hours = this!.inHours.remainder(60);
+    final minutes = this!.inMinutes.remainder(60);
+    final hoursText = hours != 0
+        ? hours == 1
+        ? "$hours hour"
+        : "$hours hours"
+        : "";
+    final minutesText = minutes != 0
+        ? minutes == 1
+        ? "$minutes minute"
+        : "$minutes minutes"
+        : "";
+    return hoursText + " " + minutesText;
+  }
 }
