@@ -31,7 +31,7 @@ dependencies:
   utopia_arch: ^0.4.0+1
   freezed_annotation: ^2.0.3
 
-
+  maps_launcher: ^2.0.1
 
 dev_dependencies:
   flutter_test:
