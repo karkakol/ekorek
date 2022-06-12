@@ -56,7 +56,7 @@ class Profile extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  user.type == UserStudent ? Icons.person : Icons.school,
+                  user is UserStudent ? Icons.person : Icons.school,
                   color: Colors.white,
                   size: 20,
                 ),

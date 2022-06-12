@@ -25,4 +25,11 @@ class UsersService {
         .map((e) => model.UserTutor.fromJson(e.data()))
         .toIList());
   }
+
+  Stream<IList<model.UserStudent>> studentsStream() {
+    return _firestore.collection(CollectionNames.users).snapshots().map((event) => event.docs
+        .where((e) => e.data()['type'] == UserType.STUDENT.display)
+        .map((e) => model.UserStudent.fromJson(e.data()))
+        .toIList());
+  }
 }

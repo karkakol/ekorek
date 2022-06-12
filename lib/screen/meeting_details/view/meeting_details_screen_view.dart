@@ -32,13 +32,15 @@ class MeetingDetailsView extends StatelessWidget {
   }
 
   Widget _buildDetails() {
-    final tutor = state.tutor!;
     return FormLayout.simple(
       backgroundColor: Colors.white,
       content: Column(
         children: [
-          TutorInfo(tutor: tutor as UserTutor, subject: state.appointment.subject.name),
-          UserAddress(user: state.tutor!),
+          if (state.user is UserTutor)
+          UserInfo(user: state.user as UserTutor, subject: state.appointment.subject.name),
+          if (state.user is UserStudent)
+            UserInfo(user: state.user as UserStudent, subject: state.appointment.subject.name),
+          UserAddress(user: state.user!),
           AppointmentDetails(
             duration: state.appointment.lessonLength,
             pickedDay: state.appointment.startTime,

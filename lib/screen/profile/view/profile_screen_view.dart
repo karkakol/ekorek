@@ -19,7 +19,7 @@ class ProfileScreenView extends StatelessWidget {
         iconTheme: IconThemeData(color: AppColors.darkColor),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        padding: const EdgeInsets.symmetric(horizontal:16, vertical: 24),
         child: Profile(user: state.user),
       ),
     );

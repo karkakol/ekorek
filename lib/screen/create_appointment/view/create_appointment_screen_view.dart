@@ -30,8 +30,8 @@ class CreateAppointmentScreenView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         content: Column(
           children: [
-            TutorInfo(
-              tutor: state.tutor,
+            UserInfo(
+              user: state.tutor,
               subject: state.subject,
             ),
             UserAddress(user: state.tutor),
