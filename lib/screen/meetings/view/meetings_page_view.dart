@@ -45,7 +45,12 @@ class MeetingsPageView extends StatelessWidget {
       itemCount: appointments.length,
       itemBuilder: (context, index) => Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
-        child: AppointmentWidget(appointment: appointments[index]),
+        child: AppointmentWidget(
+          appointment: appointments[index],
+          currentUser: state.currentUser,
+          student: state.getStudent(appointments[index].studentId),
+          tutor: state.getTutor(appointments[index].tutorId),
+        ),
       ),
     );
   }

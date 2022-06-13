@@ -1,3 +1,4 @@
+import 'package:ekorek/app/state/user/user_state.dart';
 import 'package:ekorek/di/injector.dart';
 import 'package:ekorek/model/appointment/appointment.dart';
 import 'package:ekorek/model/user/user.dart';
@@ -9,42 +10,37 @@ import 'package:utopia_utils/utopia_utils.dart';
 
 class MeetingDetailsState {
   final Appointment appointment;
-  final User? student;
-  final User? tutor;
   final bool isLoading;
   final void Function() onCancelAppointment;
+  final User? user;
 
   MeetingDetailsState({
     required this.appointment,
-    required this.tutor,
-    required this.student,
     required this.isLoading,
     required this.onCancelAppointment,
+    required this.user,
   });
 }
 
 MeetingDetailsState useMeetingDetailsState({required MeetingsDetailsScreenArgs args}) {
+  final currentUser = useProvided<UserState>().user!;
   final appointment = args.appointment;
   final appointmentService = useInjected<AppointmentsService>();
   final userService = useInjected<UserService>();
-  final studentState = useState<User?>(null);
-  final tutorState = useState<User?>(null);
+  final userState = useState<User?>(null);
   final context = useContext();
 
   useMemoized(() async {
-    studentState.value = await userService.getUser(appointment.studentId);
-    tutorState.value = await userService.getUser(appointment.tutorId);
+    userState.value = await userService.getUser(currentUser == appointment.studentId ? appointment.tutorId : appointment.studentId);
   });
 
-
   return MeetingDetailsState(
-    student: studentState.value,
-    tutor: tutorState.value,
     appointment: appointment,
-    isLoading: studentState.value == null || tutorState.value == null,
+    isLoading: userState.value == null,
     onCancelAppointment: () async {
       await appointmentService.cancel(appointment);
       context.navigator.pop();
-    }
+    },
+    user: userState.value,
   );
 }
